@@ -1,0 +1,42 @@
+{
+    "0": {
+        "name": "Monochromatic",
+        "description": "Monochromatic colors use one color with various tints, tones, and shades for the painting. The color scheme is simple but powerful.",
+        "images": {
+            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/monochromatic1.png",
+            "2": "https://i0.wp.com/doodlewash.com/wp-content/uploads/2020/06/One-Color-Monochromatic-Watercolor-Painting-Tutorial.jpg?w=1024&ssl=1"
+        }
+    },
+    "1": {
+        "name": "Complementary",
+        "description": "Complementary colors lie directly across the color wheel from each other and create a powerful duo.",
+        "images": {
+            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/complementary1.png",
+            "2": "https://pbs.twimg.com/media/Ge10MFlbkAAWfrs?format=jpg&name=medium"
+        }
+    },
+    "2": {
+        "name": "Analogous",
+        "description": "Analogous color uses colors that are next to each other on the color wheel. Usually match well and create serene designs.",
+        "images": {
+            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/analogous1.png",
+            "2": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/analogous2.jpg"
+        }
+    },
+    "3": {
+        "name": "Triadic",
+        "description": "Triadic colors use three evenly spaced colors on the color wheel. It provides strong visual contrast with harmony.",
+        "images": {
+            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/triadic1.png",
+            "2": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/triadic2.png"
+        }
+    },
+    "4": {
+        "name": "Tetradic",
+        "description": "Tetradic uses four colors in two complementary pairs. It offers rich color diversity and balance.",
+        "images": {
+            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/tetradic1.png",
+            "2": "https://www.claude-monet.com/assets/img/paintings/regatta-at-argenteuil.jpg"
+        }
+    }
+}
