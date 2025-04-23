@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+{% if valid %}
+
+<div class="col-12">
+  <div class="row">
+    <div class="fw-bold" id = "lesson-title">{{ lesson_name }} Color Scheme</div>
+  </div>
+
+  <div class="row instructions">
+    Pick a color and see its {{ lesson_name }} Color Scheme!
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-md-5 d-flex justify-content-center mb-3 mb-md-0">
+      <div id="colorWheel"></div>
+    </div>
+
+    <div class="col-md-7 d-flex align-items-center justify-content-center">
+      <div class="d-flex gap-3 flex-wrap justify-content-center" style="display: flex; gap: 30px;">
+        {% for i in range(num_boxes) %}
+        <div class="color-box border" id="colorBox{{ i }}" style="width:120px; height:120px;"></div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- TODO: put images on left side and description on right -->
+
+  <br>
+
+  <div class="row">
+    <div class="col-md-12">
+      {% for key, image_url in lesson_images.items() %}
+        <img src="{{ image_url }}" alt="Image {{ key }}" class="img-fluid lesson-image" style="margin-bottom: 20px;">
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Show lesson description here -->
+    <p>{{ lesson_description }}</p>
+  </div>   
+
+  <!-- TODO: fix button alignments -->
+   
+  <div class="row">
+    {% if lesson_number > 0 %}
+      <a href="/learn/{{ lesson_number - 1 }}" class="prev-button"><button>Previous</button></a>
+    {% endif %}
+  
+    {% if lesson_number < 4 %}
+      <a href="/learn/{{ lesson_number + 1 }}" class="next-button"><button>Next</button></a>
+    {% elif lesson_number == 4 %}
+      <a href="/quiz" class="next-button"><button>Start Quiz!</button></a>
+    {% endif %}
+  </div>
+
+</div>
+
+
+
+
+{% else %}
+<h2>Lesson Not Found</h2>
+<p>Please choose a valid lesson.</p>
+<a href="/learn/0"><button>Go to First Lesson</button></a>
+{% endif %}
+
+
+<script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+
+<script>
+  const numBoxes = {{ num_boxes | int }};
+  const lessonNumber = {{ lesson_number }};
+  const savedColor = {{ saved_color|tojson|default('null') }};
+</script>
+<script src="{{ url_for('static', filename='learn-script.js') }}"></script>
+
+<style>
+  body {
+    font-family: 'Arial';
+  }
+
+  .color-box {
+    transition: background-color 0.3s ease;
+  }
+</style>
+
+<script src="{{ url_for('static', filename='learn-script.js') }}"></script>
+<link rel="stylesheet" href="{{url_for('static', filename='learn-style.css')}}">
+
+{% endblock %}

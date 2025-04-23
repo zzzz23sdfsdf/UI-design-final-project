@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+
+<div class="row align-items-center justify-content-center min-vh-75">
+  <div class="col-md-8 text-center">
+      <div class="jumbotron bg-white shadow-sm">
+          <h1 class="display-4">Come learn color theory!!</h1>
+          <p class="lead">Color is a power which directly influences the soul <br>
+              —— Wassily Kandinsky.</p>
+          
+          <hr class="my-4">
+          
+          <div class="row my-5">
+              <div class="col-md-4">
+                  <div class="card mb-4 shadow-sm">
+                      <div class="card-body text-center">
+                          <h3 class="card-title">Learn</h3>
+                          <p class="card-text">Get helpful hints when you need them</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="card mb-4 shadow-sm">
+                      <div class="card-body text-center">
+                          <h3 class="card-title">Interactive</h3>
+                          <p class="card-text">Visual examples and drag-and-drop activities</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="card mb-4 shadow-sm">
+                      <div class="card-body text-center">
+                          <h3 class="card-title">8 Questions</h3>
+                          <p class="card-text">Covering essential color theory concepts</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="d-flex justify-content-center">
+              <a href="/learn/0" class="btn btn-outline-primary btn-lg mr-3">Tutorial</a>
+              <a href="/quiz" class="btn btn-primary btn-lg">Start Quiz</a>
+          </div>
+      </div>
+  </div>
+</div>
+
+<style>
+  .min-vh-75 {
+      min-height: 75vh;
+  }
+  .jumbotron {
+      border-radius: 15px;
+      padding: 3rem;
+  }
+  .card {
+      transition: transform 0.3s ease;
+      border-radius: 10px;
+  }
+  .card:hover {
+      transform: translateY(-5px);
+  }
+  .btn-lg {
+      padding: 0.75rem 2rem;
+      border-radius: 30px;
+      font-weight: 600;
+  }
+</style>
+
+
+<link rel="stylesheet" href="{{url_for('static', filename='home-page.css')}}">
+
+{% endblock %}
+
+
+
