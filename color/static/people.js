@@ -20,8 +20,8 @@ function get_and_save_name(){
         data : JSON.stringify(data_to_save),
         success: function(result){
             let all_data = result["data"]
-            console.log("success get_and_save_name")
-            console.log(all_data)
+            // console.log("success get_and_save_name")
+            // console.log(all_data)
             data = all_data
             displayNames(data)
             $("#new_name").val("")
