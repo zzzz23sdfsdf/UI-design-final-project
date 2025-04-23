@@ -11,10 +11,37 @@
     <a href="/quiz/1" class="btn btn-primary btn-lg">Start Quiz</a>
 
   {% elif question %}
+    <div class="quiz-progress mb-3">
+      <div class="progress" style="height: 10px; width: 300px;">
+        <div class="progress-bar bg-success" role="progressbar" 
+            style="width: {{ (qnum / total_questions) * 100 }}%;" 
+            aria-valuenow="{{ qnum }}" aria-valuemin="0" aria-valuemax="{{ total_questions }}">
+        </div>
+      </div>
+      <div class="text-muted mt-1">Question {{ qnum }} of {{ total_questions }}</div>
+    </div>
+
     <h2 class="mb-4">Question {{ qnum }}:<br>{{ question.question }}</h2>
 
     {% if question.image %}
       <img src="{{ question.image }}" class="mb-4 img-fluid" alt="Question Image" style="max-width: 500px;">
+    {% endif %}
+
+    {% if is_completed %}
+      <!-- Display the previously submitted answer (read-only) -->
+      <div class="alert {% if (qnum == 6 or qnum == 7) and previous_answer|int == question.correct_index + 1 or qnum == 8 or previous_answer == question.correct %}alert-success{% else %}alert-danger{% endif %} mb-4">
+        <strong>You've already answered this question.</strong><br>
+        {% if (qnum == 6 or qnum == 7) and previous_answer|int == question.correct_index + 1 or qnum == 8 or previous_answer == question.correct %}
+          <span class="text-success">✓ Correct!</span>
+        {% else %}
+          <span class="text-danger">✗ Incorrect.</span>
+          {% if question.type == 'mcq' %}
+            The correct answer was {{ question.correct }}.
+          {% elif question.type == 'drag' and (qnum == 6 or qnum == 7) %}
+            The correct choice was #{{ question.correct_index + 1 }}.
+          {% endif %}
+        {% endif %}
+      </div>
     {% endif %}
 
     {% if question.image_options %}
@@ -22,8 +49,11 @@
         {% for img_url in question.image_options %}
           <div class="text-center">
             <div class="label-box">{{ 'ABCDEF'[loop.index0] }}</div>
-            <img src="{{ img_url }}" class="q-option {% if qnum == 3 %}q3-option{% endif %} img-thumbnail m-2" data-option="{{ 'ABCDEF'[loop.index0] }}" alt="Option {{ 'ABCDEF'[loop.index0] }}" style="cursor:pointer; max-width: 200px;">
-            
+            <img src="{{ img_url }}" class="q-option {% if qnum == 3 %}q3-option{% endif %} img-thumbnail m-2 
+              {% if is_completed %}completed-option{% endif %} 
+              {% if previous_answer == 'ABCDEF'[loop.index0] %}selected-option{% endif %}" 
+              data-option="{{ 'ABCDEF'[loop.index0] }}" alt="Option {{ 'ABCDEF'[loop.index0] }}"
+              style="cursor: {% if is_completed %}default{% else %}pointer{% endif %}; max-width: 200px;">
           </div>
         {% endfor %}
       </div>
@@ -32,7 +62,12 @@
         {% for option in question.options %}
           <div class="text-center">
             <div class="label-box">{{ 'ABCD'[loop.index0] }}</div>
-            <div class="q-option btn btn-light m-2" data-option="{{ 'ABCD'[loop.index0] }}">{{ option }}</div>
+            <div class="q-option btn {% if is_completed %}btn-outline-secondary{% else %}btn-light{% endif %} m-2
+              {% if previous_answer == 'ABCD'[loop.index0] %}selected-option{% endif %}" 
+              data-option="{{ 'ABCD'[loop.index0] }}"
+              {% if is_completed %}disabled{% endif %}>
+              {{ option }}
+            </div>
           </div>
         {% endfor %}
       </div>
@@ -40,25 +75,45 @@
       <div class="drag-q67-layout d-flex justify-content-between w-100">
         <div class="left-col d-grid drag-grid">
           {% for color in question.choices %}
-            <div class="color-block uniform-block" style="background-color: {{ color }};" data-color="{{ color }}" draggable="true"></div>
+            <div class="color-block-container">
+              <div class="color-block uniform-block {% if is_completed %}disabled-color{% endif %}" 
+                  style="background-color: {{ color }};" 
+                  data-color="{{ color }}" 
+                  data-index="{{ loop.index }}"
+                  draggable="{% if not is_completed %}true{% else %}false{% endif %}">
+              </div>
+              <div class="color-number">#{{ loop.index }}</div>
+            </div>
           {% endfor %}
         </div>
 
         <div class="right-col d-flex flex-column align-items-center">
           <div class="color-wheel mb-3" id="colorWheel" style="width: 240px;"></div>
-          <div class="text-muted mb-2">Drag and drop here</div>
+          <div class="text-muted mb-2">
+            {% if is_completed %}
+              Your selection
+            {% else %}
+              Drag and drop here
+            {% endif %}
+          </div>
           <div class="d-flex justify-content-center align-items-center gap-3">
             {% if qnum == 6 %}
               <div class="color-swatch uniform-block" style="background-color: #f88;"></div>
-              <div class="drop-zone uniform-block" data-correct-index="{{ question.correct_index + 1 }}"></div>
+              <div class="drop-zone uniform-block" data-correct-index="{{ question.correct_index + 1 }}"
+                  {% if previous_answer %}style="background-color: {{ question.choices[previous_answer|int - 1] }}"{% endif %}></div>
               <div class="color-swatch uniform-block" style="background-color: #660000;"></div>
             {% elif qnum == 7 %}
               <div class="color-swatch uniform-block" style="background-color: yellow;"></div>
-              <div class="drop-zone uniform-block" data-correct-index="{{ question.correct_index + 1 }}"></div>
+              <div class="drop-zone uniform-block" data-correct-index="{{ question.correct_index + 1 }}"
+                  {% if previous_answer %}style="background-color: {{ question.choices[previous_answer|int - 1] }}"{% endif %}></div>
               <div class="color-swatch uniform-block" style="background-color: blue;"></div>
             {% endif %}
           </div>
-          {% if question.hint %}<div id="hint-text" class="alert alert-info mt-3" style="display:none;">Hint: {{ question.hint }}</div>{% endif %}
+          {% if question.hint %}
+            <div id="hint-text" class="alert alert-info mt-3" {% if not hint_shown %}style="display:none;"{% endif %}>
+              Hint: {{ question.hint }}
+            </div>
+          {% endif %}
           <div id="drop-feedback" class="font-weight-bold mt-2"></div>
         </div>
       </div>
@@ -66,7 +121,14 @@
       <div class="drag-q8 w-100 d-flex flex-column align-items-center">
         <div class="d-flex flex-wrap justify-content-center mb-4">
           {% for color in question.choices %}
-            <div class="color-block uniform-block" style="background-color: {{ color }};" data-color="{{ color }}" draggable="true"></div>
+            <div class="color-block-container">
+              <div class="color-block uniform-block {% if is_completed %}disabled-color{% endif %}" 
+                  style="background-color: {{ color }};" 
+                  data-color="{{ color }}" 
+                  draggable="{% if not is_completed %}true{% else %}false{% endif %}">
+              </div>
+              <div class="color-number">#{{ loop.index }}</div>
+            </div>
           {% endfor %}
         </div>
         <div class="d-flex justify-content-center flex-wrap">
@@ -80,8 +142,37 @@
 
     <div id="feedback" class="mt-4 font-weight-bold"></div>
     {% if question.hint and question.type != 'drag' %}
-      <div id="hint" class="text-muted mt-2" style="display: none;">Hint: {{ question.hint }}</div>
+      <div id="hint" class="text-muted mt-2" {% if hint_shown %}style="display: block;"{% else %}style="display: none;"{% endif %}>
+        Hint: {{ question.hint }}
+      </div>
     {% endif %}
+
+    <!-- Navigation Buttons -->
+    <div class="quiz-navigation mt-4 d-flex justify-content-between" style="width: 300px;">
+      {% if qnum > 1 %}
+        <a href="/quiz/{{ qnum - 1 }}" class="btn btn-outline-secondary">
+          <i class="bi bi-arrow-left"></i> Previous
+        </a>
+      {% else %}
+        <div></div> <!-- Empty div for spacing -->
+      {% endif %}
+
+      {% if qnum < total_questions %}
+        {% if not is_completed %}
+          <button id="next-locked" class="btn btn-outline-secondary" disabled>
+            Next <i class="bi bi-arrow-right"></i>
+          </button>
+        {% else %}
+          <a href="/quiz/{{ qnum + 1 }}" class="btn btn-primary">
+            Next <i class="bi bi-arrow-right"></i>
+          </a>
+        {% endif %}
+      {% else %}
+        <a href="/result" class="btn btn-success">
+          Finish Quiz <i class="bi bi-check-circle"></i>
+        </a>
+      {% endif %}
+    </div>
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
@@ -137,6 +228,18 @@
   border-color: #007bff;
   transform: translateY(-2px);
 }
+.selected-option {
+  border: 3px solid #28a745 !important;
+  box-shadow: 0 0 10px rgba(40, 167, 69, 0.3);
+}
+.completed-option {
+  cursor: default !important;
+  opacity: 0.8;
+}
+.disabled-color {
+  cursor: not-allowed !important;
+  opacity: 0.6;
+}
 .label-box {
   width: 30px;
   height: 30px;
@@ -161,10 +264,30 @@
   margin: 10px;
   cursor: grab;
 }
+.color-block-container {
+  position: relative;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.color-number {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 5px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 2px 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.color-block {
+  margin: 0;
+}
 .drag-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 15px;
   margin-bottom: 20px;
 }
 .drag-q67-layout {
@@ -184,10 +307,21 @@
     const options = document.querySelectorAll(".q-option");
     const feedback = document.getElementById("feedback");
     const hint = document.getElementById("hint");
-    let attempts = 0;
+    
+    // Get question status
+    const isCompleted = {{ 'true' if is_completed else 'false' }};
+    let attempts = {{ attempts|default(0) }};
+    const hintShown = {{ 'true' if hint_shown else 'false' }};
+    
+    // If question is already completed, don't add click handlers
+    if (isCompleted) {
+      return;
+    }
 
     options.forEach(option => {
       option.addEventListener("click", function () {
+        if (isCompleted) return; // Don't allow changes if already completed
+        
         const selected = this.dataset.option;
         const qnum = parseInt(window.location.pathname.split("/quiz/")[1]);
 
@@ -198,19 +332,49 @@
         })
         .then(res => res.json())
         .then(data => {
+          // Mark the selected option
+          options.forEach(opt => {
+            opt.classList.remove("selected-option");
+          });
+          this.classList.add("selected-option");
+          
           if (data.correct) {
             feedback.textContent = "Correct!";
             feedback.style.color = "green";
-            setTimeout(() => window.location.href = `/quiz/${qnum + 1}`, 1200);
+            
+            // Update navigation
+            const nextButton = document.getElementById("next-locked");
+            if (nextButton) {
+              nextButton.classList.remove("btn-outline-secondary");
+              nextButton.classList.add("btn-primary");
+              nextButton.disabled = false;
+              nextButton.innerHTML = `<a href="/quiz/${qnum + 1}" style="color: inherit; text-decoration: none;">Next <i class="bi bi-arrow-right"></i></a>`;
+            }
+            
+            // Reload the page to show completed state (no auto-navigation)
+            window.location.reload();
           } else {
-            attempts++;
-            feedback.textContent = attempts === 1
+            feedback.textContent = data.attempts === 1
               ? "Oops! One more try!"
-              : "Sorry, moving to the next question.";
-            feedback.style.color = attempts === 1 ? "red" : "gray";
-            if (attempts === 1 && hint) hint.style.display = "block";
-            if (attempts > 1) {
-              setTimeout(() => window.location.href = `/quiz/${qnum + 1}`, 1500);
+              : "Sorry, you've used all your attempts.";
+            feedback.style.color = data.attempts === 1 ? "red" : "gray";
+            
+            if (data.attempts === 1 && hint) {
+              hint.style.display = "block";
+            }
+            
+            if (data.attempts > 1) {
+              // Update navigation
+              const nextButton = document.getElementById("next-locked");
+              if (nextButton) {
+                nextButton.classList.remove("btn-outline-secondary");
+                nextButton.classList.add("btn-primary");
+                nextButton.disabled = false;
+                nextButton.innerHTML = `<a href="/quiz/${qnum + 1}" style="color: inherit; text-decoration: none;">Next <i class="bi bi-arrow-right"></i></a>`;
+              }
+              
+              // Reload the page to show completed state (no auto-navigation)
+              window.location.reload();
             }
           }
         })
@@ -219,6 +383,5 @@
     });
   });
 </script>
-
 
 {% endblock %}
