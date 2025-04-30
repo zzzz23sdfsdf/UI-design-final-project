@@ -16,19 +16,46 @@
 
   <br>
 
+  <div class="paddingbwtitle">
+
   <div class="row">
-    <div class="col-md-5 d-flex justify-content-center mb-3 mb-md-0">
-      <div id="colorWheel"></div>
+    <div class="col-md-5 d-flex flex-column align-items-center">
+
+
+      <div class="row">
+        <div id="colorWheel" class="mb-4"></div>
+      </div>
+
+      <br>
+      <div class="paddingbw">
+
+      </div>
+
+      {% for key, image_url in lesson_images.items() %}
+      <img src="{{ image_url }}" alt="Image {{ key }}" class="img-fluid lesson-image mb-3 colorimages"
+        style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 250px;">
+      {% endfor %}
     </div>
 
-    <div class="col-md-7 d-flex align-items-center justify-content-center">
-      <div class="d-flex gap-3 flex-wrap justify-content-center" style="display: flex; gap: 30px;">
-        {% for i in range(num_boxes) %}
-        <div class="color-box border" id="colorBox{{ i }}" style="width:120px; height:120px;"></div>
-        {% endfor %}
-      </div>
+    <div class="col-md-7 d-flex flex-column align-items-center justify-content-center">
+        <div class="d-flex gap-3 flex-wrap justify-content-center mb-4 colorboxes" style="display: flex; gap: 30px;">
+          {% for i in range(num_boxes) %}
+          <div class="color-box border" id="colorBox{{ i }}" style="width:120px; height:120px;"></div>
+          {% endfor %}
+        </div>
+
+        <br>
+
+        <div class="col-md-9 d-flex align-items-start lesson-description">
+          <div>
+            <h4 class="fw-semibold mb-3 descrition-title">About {{ lesson_name }} Colors</h4>
+            <p class = "description-content" style="line-height: 1.6;">{{ lesson_description }}</p>
+          </div>
+        </div>
+
     </div>
   </div>
+
 
   <br>
 
@@ -36,38 +63,20 @@
 
   <br>
 
-  <div class="row">
-    <div class="col-md-6">
-      {% for key, image_url in lesson_images.items() %}
-      <div class="row">
-
-        <img src="{{ image_url }}" alt="Image {{ key }}" class="img-fluid lesson-image mb-3"
-        style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-      </div>
-
-
-      {% endfor %}
-    </div>
-
-    <div class="col-md-6 d-flex align-items-start">
-      <div>
-        <h4 class="fw-semibold mb-3">About {{ lesson_name }} Color Scheme</h4>
-        <p style="line-height: 1.6;">{{ lesson_description }}</p>
-      </div>
-    </div>
-  </div>
   <!-- TODO: fix button alignments -->
 
-  <div class="row">
+  <div class="button-container">
     {% if lesson_number > 0 %}
     <a href="/learn/{{ lesson_number - 1 }}" class="prev-button"><button>Previous</button></a>
     {% endif %}
 
-    {% if lesson_number < 4 %} <a href="/learn/{{ lesson_number + 1 }}" class="next-button"><button>Next</button></a>
-      {% elif lesson_number == 4 %}
-      <a href="/quiz" class="next-button"><button>Start Quiz!</button></a>
-      {% endif %}
-  </div>
+    {% if lesson_number < 4 %}
+    <a href="/learn/{{ lesson_number + 1 }}" class="next-button"><button>Next</button></a>
+    {% elif lesson_number == 4 %}
+    <a href="/quiz" class="next-button"><button>Start Quiz!</button></a>
+    {% endif %}
+</div>
+
 
 </div>
 
