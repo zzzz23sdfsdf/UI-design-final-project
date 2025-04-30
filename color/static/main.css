@@ -1,0 +1,681 @@
+/* General Styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #FAF0E6;
+  color: #333;
+}
+
+/* Quiz Container */
+.quiz-screen {
+  min-height: 90vh;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+/* Question Styling */
+h2 {
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+/* General Grid Layout */
+.q-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  justify-items: center;
+}
+
+/* Option Box */
+.q-option {
+  background-color: #fff;
+  border: 2px solid #e0e0e0;
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  width: 100%;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+}
+
+/* Option hover effect */
+.q-option:hover {
+  background-color: #f1f8ff;
+  border-color: #3B82F6;
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+/* Option Label */
+.label-box {
+  width: 32px;
+  height: 32px;
+  background-color: #2c3e50;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Image Options */
+img.q-option, .img-option {
+  width: 240px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 3px solid #e0e0e0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+img.q-option:hover, .img-option:hover {
+  transform: scale(1.05);
+  border-color: #3B82F6;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* Question Specific Layouts */
+
+/* Question 1: Monochromatic Colors */
+.q1-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2.5rem;
+}
+
+.q1-option {
+  width: 240px;
+  height: auto;
+  object-fit: contain;
+  border: 3px solid #e0e0e0;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.q1-option:hover {
+  transform: scale(1.05);
+  border-color: #3B82F6;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* Question 2: Complementary Colors */
+.q2-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+
+.q2-option {
+  width: 280px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 3px solid #e0e0e0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.q2-option:hover {
+  transform: scale(1.05);
+  border-color: #3B82F6;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* Question 3: Analogous Colors */
+.q3-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+
+.q3-option {
+  width: 240px;
+  height: auto;
+  object-fit: contain;
+  border: 3px solid #e0e0e0;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.q3-option:hover {
+  transform: scale(1.05);
+  border-color: #3B82F6;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* Question 4: Tetradic Scheme */
+.q4-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.q4-option-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.q4-option {
+  width: 220px;
+  height: 220px;
+  object-fit: contain;
+  border: 3px solid #e0e0e0;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.q4-option:hover {
+  transform: scale(1.05);
+  border-color: #3B82F6;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* Question 5: Triadic Color Scheme */
+.q5-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.q5-option {
+  background-color: #fff;
+  border: 3px solid #e0e0e0;
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  width: 100%;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.q5-option:hover {
+  background-color: #f1f8ff;
+  border-color: #3B82F6;
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.question-image {
+  max-width: 500px;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  border: 3px solid #e0e0e0;
+}
+
+/* Drag and Drop Questions (6-8) */
+.color-block {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px;
+  border: 3px solid #555;
+  margin: 15px;
+  cursor: grab;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.color-block:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.color-block:active {
+  cursor: grabbing;
+  transform: scale(1.05);
+}
+
+.drop-zone {
+  width: 240px;
+  height: 120px;
+  border: 3px dashed #aaa;
+  border-radius: 12px;
+  margin: 2rem auto;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+}
+
+.drop-zone:hover {
+  border-color: #3B82F6;
+  background-color: #f1f8ff;
+}
+
+/* Feedback Elements */
+#feedback, #drag-feedback {
+  margin-top: 1.5rem;
+  font-weight: bold;
+  min-height: 30px;
+  transition: all 0.3s ease;
+}
+
+/* Hint Styling */
+.hint-block, #hint, #q1-hint, #q2-hint, #q3-hint, #q4-hint, #q5-hint {
+  max-width: 600px;
+  font-size: 16px;
+  background-color: #f1f8ff;
+  border-left: 5px solid #3B82F6;
+  padding: 15px;
+  margin: 1.5rem auto;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+  text-align: left;
+}
+
+/* Feedback dot animations */
+.feedback-dot {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid black;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+.feedback-dot.correct {
+  background-color: #10B981;
+  transform: scale(1.3);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+}
+
+.feedback-dot.incorrect {
+  background-color: #EF4444;
+  animation: pulse 0.6s ease;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+}
+
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* Quiz Image Grid */
+.quiz-image-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  justify-items: center;
+  align-items: start;
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .q-grid, .q1-grid, .q2-grid, .q3-grid, .q4-grid, .q5-grid, .quiz-image-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  img.q-option, .img-option, .q1-option, .q2-option, .q3-option, .q4-option {
+    width: 85%;
+    max-width: 280px;
+    height: auto;
+  }
+  
+  .question-image {
+    max-width: 90%;
+  }
+  
+  .color-block {
+    width: 70px;
+    height: 70px;
+    margin: 10px;
+  }
+  
+  .drop-zone {
+    width: 200px;
+    height: 100px;
+  }
+}
+
+.q3-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+
+.q3-option {
+  width: 320px !important;
+  height: auto !important;
+  object-fit: contain !important;
+  border: 3px solid #e0e0e0;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.color-block-container {
+  position: relative;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.color-number {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 5px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 2px 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Adjust existing styles */
+.color-block {
+  margin: 0; /* Remove margin from color-block since it's now in the container */
+}
+
+.drag-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}  
+
+
+/* Multiple Choice Question Grid Layout */
+.mcq-grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 800px;
+  margin: 0 auto 30px auto;
+}
+
+.mcq-grid-row {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.mcq-grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 280px;
+}
+
+/* Label box styling */
+.label-box {
+  width: 36px;
+  height: 36px;
+  background-color: #2c3e50;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 1;
+}
+
+/* Option styling */
+.q-option {
+  background-color: #fff;
+  border: 2px solid #e0e0e0;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  width: 100%;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+  margin-top: 5px;
+}
+
+/* Image option styling */
+img.q-option {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 3px solid #e0e0e0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background-color: white;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+/* Hover effects */
+.q-option:hover, img.q-option:hover {
+  border-color: #3B82F6;
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Selected option */
+.selected-option {
+  border: 3px solid #28a745 !important;
+  box-shadow: 0 0 15px rgba(40, 167, 69, 0.4) !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .mcq-grid-row {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .mcq-grid-item {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+  }
+  
+  .label-box {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+}
+
+/* Fixed image container sizes for consistent display */
+.mcq-grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  max-width: 900px;
+  margin: 0 auto 30px auto;
+  justify-items: center;
+}
+
+.mcq-grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Fixed dimensions container for images */
+.image-container {
+  width: 100%;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 14px;
+  border: 3px solid #e0e0e0;
+  padding: 10px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.12);
+  transition: all 0.3s ease;
+  overflow: hidden; /* Ensure content stays within bounds */
+}
+
+.image-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.18);
+  border-color: #007bff;
+}
+
+/* Image styling within container */
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Selected container */
+.selected-container {
+  border: 4px solid #28a745 !important;
+  box-shadow: 0 0 18px rgba(40, 167, 69, 0.45) !important;
+}
+
+/* Correct answer highlight */
+.correct-container {
+  border: 4px solid #28a745 !important;
+  box-shadow: 0 0 20px rgba(40, 167, 69, 0.5) !important;
+}
+
+/* Label box styling */
+.label-box {
+  width: 40px;
+  height: 40px;
+  background-color: #2c3e50;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.15);
+  z-index: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .mcq-grid-item {
+    max-width: 350px;
+  }
+  
+  .image-container {
+    height: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mcq-grid-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .mcq-grid-item {
+    max-width: 320px;
+  }
+  
+  .image-container {
+    height: 220px;
+  }
+}
+
+
+/* Special styling for option A image */
+.mcq-grid-item:first-child .image-container img {
+  padding: 0;
+  width: 90%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Make the option A container's border match the "correct" green color */
+.mcq-grid-item:first-child .image-container.correct-container,
+.mcq-grid-item:first-child .image-container.selected-container {
+  border-color: #28a745 !important;
+  border-width: 4px;
+}
+
+/* Add extra padding to ensure consistent appearance */
+.mcq-grid-item:first-child .image-container {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Special styling for option A image */
+.mcq-grid-item:first-child .image-container {
+  padding: 15px;
+}
+
+.mcq-grid-item:first-child .image-container img {
+  width: 90%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Specific styling for Question 2 Option A */
+.q2-option-a {
+  width: 100% !important; 
+  height: auto !important;
+  max-height: none !important;
+  transform: scale(1.0) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+
+/* Specific fix for Question 2 Option A image to match other options */
+.quiz-screen[data-question="2"] .mcq-grid-item:first-child .image-container {
+  height: 280px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.quiz-screen[data-question="2"] .mcq-grid-item:first-child .image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
