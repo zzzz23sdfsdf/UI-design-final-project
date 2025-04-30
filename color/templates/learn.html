@@ -7,7 +7,7 @@
 
 <div class="col-12">
   <div class="row">
-    <div class="fw-bold" id = "lesson-title">{{ lesson_name }} Color Scheme</div>
+    <div class="fw-bold" id="lesson-title">{{ lesson_name }} Color Scheme</div>
   </div>
 
   <div class="row instructions">
@@ -37,30 +37,36 @@
   <br>
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
       {% for key, image_url in lesson_images.items() %}
-        <img src="{{ image_url }}" alt="Image {{ key }}" class="img-fluid lesson-image" style="margin-bottom: 20px;">
+      <div class="row">
+
+        <img src="{{ image_url }}" alt="Image {{ key }}" class="img-fluid lesson-image mb-3"
+        style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+      </div>
+
+
       {% endfor %}
     </div>
+
+    <div class="col-md-6 d-flex align-items-start">
+      <div>
+        <h4 class="fw-semibold mb-3">About {{ lesson_name }} Color Scheme</h4>
+        <p style="line-height: 1.6;">{{ lesson_description }}</p>
+      </div>
+    </div>
   </div>
-
-  <div class="row">
-    <!-- Show lesson description here -->
-    <p>{{ lesson_description }}</p>
-  </div>   
-
   <!-- TODO: fix button alignments -->
-   
+
   <div class="row">
     {% if lesson_number > 0 %}
-      <a href="/learn/{{ lesson_number - 1 }}" class="prev-button"><button>Previous</button></a>
+    <a href="/learn/{{ lesson_number - 1 }}" class="prev-button"><button>Previous</button></a>
     {% endif %}
-  
-    {% if lesson_number < 4 %}
-      <a href="/learn/{{ lesson_number + 1 }}" class="next-button"><button>Next</button></a>
-    {% elif lesson_number == 4 %}
+
+    {% if lesson_number < 4 %} <a href="/learn/{{ lesson_number + 1 }}" class="next-button"><button>Next</button></a>
+      {% elif lesson_number == 4 %}
       <a href="/quiz" class="next-button"><button>Start Quiz!</button></a>
-    {% endif %}
+      {% endif %}
   </div>
 
 </div>
@@ -80,7 +86,7 @@
 <script>
   const numBoxes = {{ num_boxes | int }};
   const lessonNumber = {{ lesson_number }};
-  const savedColor = {{ saved_color|tojson|default('null') }};
+  const savedColor = {{ saved_color| tojson |default ('null') }};
 </script>
 <script src="{{ url_for('static', filename='learn-script.js') }}"></script>
 
