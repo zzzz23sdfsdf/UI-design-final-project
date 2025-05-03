@@ -1,0 +1,151 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="result-container text-center mt-5">
+  <h2 class="mb-4">🎉 You finished the quiz!</h2>
+  
+  <div class="score-display p-4 mb-4 bg-light rounded">
+    <h3>Your Score: {{ score }} / {{ total }}</h3>
+    
+    <div class="progress mt-3">
+      <div class="progress-bar bg-success" role="progressbar" 
+           style="width: {{ (score / total) * 100 }}%;" 
+           aria-valuenow="{{ score }}" aria-valuemin="0" aria-valuemax="{{ total }}">
+        {{ ((score / total) * 100)|round(1) }}%
+      </div>
+    </div>
+  </div>
+  
+  {% if score == total %}
+    <div class="alert alert-success">
+      <strong>Perfect score!</strong> You've mastered color theory concepts!
+    </div>
+  {% elif score >= total * 0.7 %}
+    <div class="alert alert-info">
+      <strong>Great job!</strong> You have a solid understanding of color theory.
+    </div>
+  {% else %}
+    <div class="alert alert-warning">
+      <strong>Good effort!</strong> You might want to review the color theory concepts again.
+    </div>
+  {% endif %}
+
+  <!-- Question Summary -->
+  <div class="answer-summary mt-4 mb-4">
+    <h4>Question Summary:</h4>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th>Question</th>
+            <th>Status</th>
+            <th>Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for qnum in range(1, total+1) %}
+            {% set q_key = qnum|string %}
+            <tr>
+              <td>Question {{ qnum }}</td>
+              <td>
+                {% if q_key in user_quiz_data.completed_questions %}
+                  {% if qnum == 6 or qnum == 7 %}
+                    {% if user_quiz_data.answers[q_key]|int == questions[qnum-1].correct_index + 1 %}
+                      {% if user_quiz_data.attempts[q_key] == 1 %}
+                        <span class="text-success">✓ Correct on first try!</span>
+                      {% else %}
+                        <span class="text-success">✓ Correct after hint</span>
+                      {% endif %}
+                    {% else %}
+                      <span class="text-danger">✗ Incorrect</span>
+                    {% endif %}
+                  {% elif qnum == 8 %}
+                    <span class="text-success">✓ Very nice!</span>
+                  {% else %}
+                    {% if user_quiz_data.answers[q_key] == questions[qnum-1].correct %}
+                      {% if user_quiz_data.attempts[q_key] == 1 %}
+                        <span class="text-success">✓ Correct on first try!</span>
+                      {% else %}
+                        <span class="text-success">✓ Correct after hint</span>
+                      {% endif %}
+                    {% else %}
+                      <span class="text-danger">✗ Incorrect</span>
+                    {% endif %}
+                  {% endif %}
+                {% else %}
+                  <span class="text-muted">Not attempted</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if q_key in user_quiz_data.completed_questions %}
+                  {% if qnum == 6 or qnum == 7 %}
+                    {% if user_quiz_data.answers[q_key]|int == questions[qnum-1].correct_index + 1 %}
+                      {% if user_quiz_data.attempts[q_key] == 1 %}
+                        1.0
+                      {% else %}
+                        0.5
+                      {% endif %}
+                    {% else %}
+                      0.0
+                    {% endif %}
+                  {% elif qnum == 8 %}
+                    1.0
+                  {% else %}
+                    {% if user_quiz_data.answers[q_key] == questions[qnum-1].correct %}
+                      {% if user_quiz_data.attempts[q_key] == 1 %}
+                        1.0
+                      {% else %}
+                        0.5
+                      {% endif %}
+                    {% else %}
+                      0.0
+                    {% endif %}
+                  {% endif %}
+                {% else %}
+                  0.0
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="mt-4 d-flex justify-content-center">
+    <form action="/reset_quiz" method="post" class="mr-3">
+      <button type="submit" class="btn btn-secondary">Reset Quiz</button>
+    </form>
+    <a href="/" class="btn btn-secondary mx-2">Back to Home</a>
+    <a href="/quiz/1" class="btn btn-primary ml-2">Review Questions</a>
+  </div>
+</div>
+
+<style>
+  .result-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .score-display {
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .progress {
+    height: 30px;
+  }
+  .progress-bar {
+    font-size: 16px;
+    line-height: 30px;
+  }
+  .answer-summary {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  .table th, .table td {
+    vertical-align: middle;
+  }
+</style>
+
+{% endblock %}
