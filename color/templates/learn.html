@@ -2,7 +2,6 @@
 
 {% block content %}
 
-
 {% if valid %}
 
 <div class="col-12">
@@ -16,71 +15,67 @@
 
   <br>
 
-  <div class="paddingbwtitle">
-
-  <div class="row">
+  <div class="row learn-big-box shadow-sm">
     <div class="col-md-5 d-flex flex-column align-items-center">
+      <div id="colorWheel" class="mb-4"></div>
+    </div>
 
-
-      <div class="row">
-        <div id="colorWheel" class="mb-4"></div>
+    <div class="col-md-7 d-flex flex-column align-items-center justify-content-center">
+      <div class="d-flex gap-3 flex-wrap justify-content-center mb-4 colorboxes" style="display: flex; gap: 30px;">
+        {% for i in range(num_boxes) %}
+        <div class="color-box border" id="colorBox{{ i }}" style="width:120px; height:120px; "></div>
+        {% endfor %}
       </div>
+    </div>
+  </div>
 
-      <br>
-      <div class="paddingbw">
+  <br>
 
-      </div>
+  <div class="row learn-descriptions">
+    <div class="col-md-5 d-flex flex-column align-items-center">
+      {% set first_key, first_url = lesson_images.items() | list | first %}
+        <img src="{{ first_url }}" alt="Image {{ first_key }}" class="img-fluid lesson-image mb-3 colorimages"
+          style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 250px;">
+    </div>
 
+    <div class="col-md-7 d-flex flex-column align-items-center justify-content-center">
+      <h4 class="fw-semibold mb-3 descrition-title">About {{ lesson_name }} Colors</h4>
+      <p class="description-content" style="line-height: 1.6;">{{ lesson_description }}</p>
+    </div>
+  </div>
+
+  <br>
+
+  <!-- TODO: populate color galleries -->
+
+  <!-- <div class="row">
+    {{ lesson_name }} Color Scheme Gallery!
+  </div> -->
+  
+
+  <!-- <div class="row">
+    <div class="col-md-5 d-flex flex-column align-items-center">
       {% for key, image_url in lesson_images.items() %}
       <img src="{{ image_url }}" alt="Image {{ key }}" class="img-fluid lesson-image mb-3 colorimages"
         style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 250px;">
       {% endfor %}
     </div>
-
-    <div class="col-md-7 d-flex flex-column align-items-center justify-content-center">
-        <div class="d-flex gap-3 flex-wrap justify-content-center mb-4 colorboxes" style="display: flex; gap: 30px;">
-          {% for i in range(num_boxes) %}
-          <div class="color-box border" id="colorBox{{ i }}" style="width:120px; height:120px;"></div>
-          {% endfor %}
-        </div>
-
-        <br>
-
-        <div class="col-md-9 d-flex align-items-start lesson-description">
-          <div>
-            <h4 class="fw-semibold mb-3 descrition-title">About {{ lesson_name }} Colors</h4>
-            <p class = "description-content" style="line-height: 1.6;">{{ lesson_description }}</p>
-          </div>
-        </div>
-
-    </div>
-  </div>
-
+  </div> -->
 
   <br>
-
-  <!-- TODO: put images on left side and description on right -->
-
-  <br>
-
-  <!-- TODO: fix button alignments -->
 
   <div class="button-container">
     {% if lesson_number > 0 %}
-    <a href="/learn/{{ lesson_number - 1 }}" class="prev-button"><button>Previous</button></a>
+    <a href="/learn/{{ lesson_number - 1 }}" id="prev-button"><button>Previous</button></a>
     {% endif %}
 
-    {% if lesson_number < 4 %}
-    <a href="/learn/{{ lesson_number + 1 }}" class="next-button"><button>Next</button></a>
-    {% elif lesson_number == 4 %}
-    <a href="/quiz" class="next-button"><button>Start Quiz!</button></a>
-    {% endif %}
-</div>
-
+    {% if lesson_number < 4 %} <a href="/learn/{{ lesson_number + 1 }}" id="next-button"><button>Next</button></a>
+      {% elif lesson_number == 4 %}
+      <a href="/quiz/0" id="next-button"><button>Start Quiz!</button></a>
+      {% endif %}
+  </div>
 
 </div>
-
-
 
 
 {% else %}
@@ -88,6 +83,8 @@
 <p>Please choose a valid lesson.</p>
 <a href="/learn/0"><button>Go to First Lesson</button></a>
 {% endif %}
+
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
@@ -100,10 +97,6 @@
 <script src="{{ url_for('static', filename='learn-script.js') }}"></script>
 
 <style>
-  body {
-    font-family: 'Arial';
-  }
-
   .color-box {
     transition: background-color 0.3s ease;
   }
