@@ -30,8 +30,7 @@ body {
 }
 
 #lesson-title {
-  /* font-family: 'Comic Sans MS', cursive; */
-  font-size: 50px;
+  font-size: 35px;
   margin-bottom: 10px;
   font-weight: 600;
 }
@@ -39,7 +38,7 @@ body {
 .instructions {
   color: #555;
   margin-bottom: 20px;
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .prev-button {
@@ -59,29 +58,24 @@ body {
 }
 
 .colorboxes{
-  padding-top: 70px;
+  /* padding-top: 70px; */
 }
 
 .paddingbw{
   margin-top: 10px;
 }
 
-.colorimages{
+.learn-descriptions{
   margin-top: 30px;
 }
 
 .descrition-title{
   font-size: 30px;
-  padding-bottom: 20px;
 }
 
 .description-content{
   font-size: 20px;
   color: #242424;
-}
-
-.paddingbwtitle{
-  margin-top: 20px;
 }
 
 .button-container {
@@ -107,14 +101,29 @@ button:hover {
   background-color: #e7e7e7;
 }
 
-.prev-button, .next-button {
+#prev-button, #next-button {
   display: inline-block;
 }
 
-.prev-button {
+#prev-button {
   text-align: left;
 }
 
-.next-button {
-  text-align: right;
+#next-button button {
+  background-color: #007BFF; /* Bootstrap blue */
+  color: white;
+  border: none;
+}
+
+#next-button button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+
+.learn-big-box{
+  padding-top:60px;
+  padding-bottom:50px;
+  background-color:white;
+  border-radius:15px;
+  width: fluid;
 }
