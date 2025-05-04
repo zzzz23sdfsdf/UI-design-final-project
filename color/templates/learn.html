@@ -65,6 +65,10 @@
   <br>
 
   <div class="button-container">
+    {% if lesson_number == 0 %}
+    <a href="/" id="prev-button"><button> Home </button></a>
+    {% endif %}
+
     {% if lesson_number > 0 %}
     <a href="/learn/{{ lesson_number - 1 }}" id="prev-button"><button>Previous</button></a>
     {% endif %}
@@ -72,7 +76,7 @@
     {% if lesson_number < 4 %} <a href="/learn/{{ lesson_number + 1 }}" id="next-button"><button>Next</button></a>
       {% elif lesson_number == 4 %}
       <a href="/quiz/0" id="next-button"><button>Start Quiz!</button></a>
-      {% endif %}
+    {% endif %}
   </div>
 
 </div>

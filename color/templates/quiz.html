@@ -4,199 +4,205 @@
 <!-- Load iro.js color wheel -->
 <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 
-<div class="quiz-screen d-flex flex-column justify-content-center align-items-center" {% if question %}data-question="{{ qnum }}"{% endif %}>
+<div class="quiz-screen d-flex flex-column justify-content-center align-items-center" {% if question
+  %}data-question="{{ qnum }}" {% endif %}>
 
   {% if qnum == 0 %}
-    <h1 class="mb-4">Ready to take the quiz?</h1>
-    <a href="/quiz/1" class="btn btn-primary btn-lg">Start Quiz</a>
+  <h1 class="mb-4">Ready to take the quiz?</h1>
+  <br>
+  <div class="d-flex justify-content-center">
+    <a href="/learn/4" class="btn btn-outline-primary btn-lg mr-4">Review </a>
+    <a href="/quiz/1" class="btn btn-primary btn-lg"> Start Quiz!</a>
+  </div>
 
   {% elif question %}
-    <div class="quiz-progress mb-3">
-      <div class="progress" style="height: 10px; width: 300px;">
-        <div class="progress-bar bg-success" role="progressbar" 
-            style="width: {{ (qnum / total_questions) * 100 }}%;" 
-            aria-valuenow="{{ qnum }}" aria-valuemin="0" aria-valuemax="{{ total_questions }}">
-        </div>
+  <div class="quiz-progress mb-3">
+    <div class="progress" style="height: 10px; width: 300px;">
+      <div class="progress-bar bg-success" role="progressbar" style="width: {{ (qnum / total_questions) * 100 }}%;"
+        aria-valuenow="{{ qnum }}" aria-valuemin="0" aria-valuemax="{{ total_questions }}">
       </div>
-      <div class="text-muted mt-1">Question {{ qnum }} of {{ total_questions }}</div>
     </div>
+    <div class="text-muted mt-1">Question {{ qnum }} of {{ total_questions }}</div>
+  </div>
 
-    <h2 class="mb-3">Question {{ qnum }}:<br>{{ question.question }}</h2>
-    
-    <!-- Hint and Feedback Container -->
-    <div class="hint-feedback-container mb-4">
-      {% if is_completed %}
-        <!-- Display the previously submitted answer (read-only) -->
-        <div class="alert {% if (qnum == 6 or qnum == 7) and previous_answer|int == question.correct_index + 1 or qnum == 8 or previous_answer == question.correct %}alert-success{% else %}alert-danger{% endif %} mb-4">
-          <strong>You've already answered this question.</strong><br>
-          {% if (qnum == 6 or qnum == 7) and previous_answer|int == question.correct_index + 1 or qnum == 8 or previous_answer == question.correct %}
-            <span class="text-success">✓ Correct!</span>
-          {% else %}
-            <span class="text-danger">✗ Incorrect.</span>
-            {% if question.type == 'mcq' %}
-              The correct answer was {{ question.correct }}.
-            {% elif question.type == 'drag' and (qnum == 6 or qnum == 7) %}
-              The correct choice was #{{ question.correct_index + 1 }}.
-            {% endif %}
-          {% endif %}
-        </div>
+  <h2 class="mb-3">Question {{ qnum }}:<br>{{ question.question }}</h2>
+
+  <!-- Hint and Feedback Container -->
+  <div class="hint-feedback-container mb-4">
+    {% if is_completed %}
+    <!-- Display the previously submitted answer (read-only) -->
+    <div
+      class="alert {% if (qnum == 6 or qnum == 7) and previous_answer|int == question.correct_index + 1 or qnum == 8 or previous_answer == question.correct %}alert-success{% else %}alert-danger{% endif %} mb-4">
+      <strong>You've already answered this question.</strong><br>
+      {% if (qnum == 6 or qnum == 7) and previous_answer|int == question.correct_index + 1 or qnum == 8 or
+      previous_answer == question.correct %}
+      <span class="text-success">✓ Correct!</span>
+      {% else %}
+      <span class="text-danger">✗ Incorrect.</span>
+      {% if question.type == 'mcq' %}
+      The correct answer was {{ question.correct }}.
+      {% elif question.type == 'drag' and (qnum == 6 or qnum == 7) %}
+      The correct choice was #{{ question.correct_index + 1 }}.
       {% endif %}
-      
-      <!-- Hint is now directly under the question title -->
-      {% if question.hint and not is_completed %}
-        <div id="hint" class="alert alert-info mb-2" {% if hint_shown %}style="display: block;"{% else %}style="display: none;"{% endif %}>
-          <strong>Hint:</strong> {{ question.hint }}
-        </div>
       {% endif %}
-      
-      <!-- Feedback message appears below the hint -->
-      <div id="feedback" class="alert alert-danger" style="display: none;"></div>
     </div>
-
-    {% if question.image %}
-      <img src="{{ question.image }}" class="mb-4 img-fluid" alt="Question Image" style="max-width: 500px;">
     {% endif %}
 
-    {% if question.image_options %}
-      <!-- Image Options Grid (2x2 format) with fixed-size containers -->
-      <div class="mcq-grid-container">
-        {% for img_url in question.image_options %}
-          <div class="mcq-grid-item">
-            <div class="label-box">{{ 'ABCDEF'[loop.index0] }}</div>
-            <div class="image-container 
+    <!-- Hint is now directly under the question title -->
+    {% if question.hint and not is_completed %}
+    <div id="hint" class="alert alert-info mb-2" {% if hint_shown %}style="display: block;" {% else
+      %}style="display: none;" {% endif %}>
+      <strong>Hint:</strong> {{ question.hint }}
+    </div>
+    {% endif %}
+
+    <!-- Feedback message appears below the hint -->
+    <div id="feedback" class="alert alert-danger" style="display: none;"></div>
+  </div>
+
+  {% if question.image %}
+  <img src="{{ question.image }}" class="mb-4 img-fluid" alt="Question Image" style="max-width: 500px;">
+  {% endif %}
+
+  {% if question.image_options %}
+  <!-- Image Options Grid (2x2 format) with fixed-size containers -->
+  <div class="mcq-grid-container">
+    {% for img_url in question.image_options %}
+    <div class="mcq-grid-item">
+      <div class="label-box">{{ 'ABCDEF'[loop.index0] }}</div>
+      <div class="image-container 
               {% if is_completed %}completed-option{% endif %} 
               {% if previous_answer == 'ABCDEF'[loop.index0] %}selected-container{% endif %}
               {% if is_completed and question.correct == 'ABCDEF'[loop.index0] %}correct-container{% endif %}"
-              data-option="{{ 'ABCDEF'[loop.index0] }}"
-              style="cursor: {% if is_completed %}default{% else %}pointer{% endif %};">
-              <img src="{{ img_url }}" alt="Option {{ 'ABCDEF'[loop.index0] }}">
-            </div>
-          </div>
-        {% endfor %}
+        data-option="{{ 'ABCDEF'[loop.index0] }}"
+        style="cursor: {% if is_completed %}default{% else %}pointer{% endif %};">
+        <img src="{{ img_url }}" alt="Option {{ 'ABCDEF'[loop.index0] }}">
       </div>
-    {% elif question.options %}
-      <!-- Text Options Grid (2x2 format for 4 options) -->
-      <div class="mcq-grid-container">
-        {% for option in question.options %}
-          <div class="mcq-grid-item">
-            <div class="label-box">{{ 'ABCDEF'[loop.index0] }}</div>
-            <div class="q-option btn {% if is_completed %}btn-outline-secondary{% else %}btn-light{% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% elif question.options %}
+  <!-- Text Options Grid (2x2 format for 4 options) -->
+  <div class="mcq-grid-container">
+    {% for option in question.options %}
+    <div class="mcq-grid-item">
+      <div class="label-box">{{ 'ABCDEF'[loop.index0] }}</div>
+      <div class="q-option btn {% if is_completed %}btn-outline-secondary{% else %}btn-light{% endif %}
               {% if previous_answer == 'ABCDEF'[loop.index0] %}selected-option{% endif %}
-              {% if is_completed and question.correct == 'ABCDEF'[loop.index0] %}correct-answer-border{% endif %}" 
-              data-option="{{ 'ABCDEF'[loop.index0] }}"
-              {% if is_completed %}disabled{% endif %}>
-              {{ option }}
-            </div>
-          </div>
-        {% endfor %}
+              {% if is_completed and question.correct == 'ABCDEF'[loop.index0] %}correct-answer-border{% endif %}"
+        data-option="{{ 'ABCDEF'[loop.index0] }}" {% if is_completed %}disabled{% endif %}>
+        {{ option }}
       </div>
-    {% elif question.type == 'drag' and question.correct_index is defined %}
-      <div class="drag-q67-layout d-flex justify-content-between w-100">
-        <div class="left-col d-grid drag-grid">
-          {% for color in question.choices %}
-            <div class="color-block-container">
-              <div class="color-block uniform-block {% if is_completed %}disabled-color{% endif %}" 
-                  style="background-color: {{ color }};" 
-                  data-color="{{ color }}" 
-                  data-index="{{ loop.index }}"
-                  draggable="{% if not is_completed %}true{% else %}false{% endif %}">
-              </div>
-              <div class="color-number">#{{ loop.index }}</div>
-            </div>
-          {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+  {% elif question.type == 'drag' and question.correct_index is defined %}
+  <div class="drag-q67-layout d-flex justify-content-between w-100">
+    <div class="left-col d-grid drag-grid">
+      {% for color in question.choices %}
+      <div class="color-block-container">
+        <div class="color-block uniform-block {% if is_completed %}disabled-color{% endif %}"
+          style="background-color: {{ color }};" data-color="{{ color }}" data-index="{{ loop.index }}"
+          draggable="{% if not is_completed %}true{% else %}false{% endif %}">
         </div>
-
-        <div class="right-col d-flex flex-column align-items-center">
-          <div class="color-wheel mb-3" id="colorWheel" style="width: 240px;"></div>
-          <div class="text-muted mb-2">
-            {% if is_completed %}
-              Your selection
-            {% else %}
-              Drag and drop here
-            {% endif %}
-          </div>
-          <div class="d-flex justify-content-center align-items-center gap-3">
-            {% if qnum == 6 %}
-              <div class="color-swatch uniform-block" style="background-color: #f88;"></div>
-              <div class="drop-zone uniform-block" data-correct-index="{{ question.correct_index + 1 }}"
-                  {% if previous_answer %}style="background-color: {{ question.choices[previous_answer|int - 1] }}"{% endif %}></div>
-              <div class="color-swatch uniform-block" style="background-color: #660000;"></div>
-            {% elif qnum == 7 %}
-              <div class="color-swatch uniform-block" style="background-color: yellow;"></div>
-              <div class="drop-zone uniform-block" data-correct-index="{{ question.correct_index + 1 }}"
-                  {% if previous_answer %}style="background-color: {{ question.choices[previous_answer|int - 1] }}"{% endif %}></div>
-              <div class="color-swatch uniform-block" style="background-color: blue;"></div>
-            {% endif %}
-          </div>
-          <div id="drop-feedback" class="font-weight-bold mt-2"></div>
-        </div>
+        <div class="color-number">#{{ loop.index }}</div>
       </div>
-    {% elif question.type == 'drag' and question.drop_slots is defined %}
-      <div class="drag-q8 w-100 d-flex flex-column align-items-center">
-        <div class="d-flex flex-wrap justify-content-center mb-4">
-          {% for color in question.choices %}
-            <div class="color-block-container">
-              <div class="color-block uniform-block {% if is_completed %}disabled-color{% endif %}" 
-                  style="background-color: {{ color }};" 
-                  data-color="{{ color }}" 
-                  draggable="{% if not is_completed %}true{% else %}false{% endif %}">
-              </div>
-              <div class="color-number">#{{ loop.index }}</div>
-            </div>
-          {% endfor %}
-        </div>
-        <div class="d-flex justify-content-center flex-wrap">
-          {% for i in range(question.drop_slots) %}
-            <div class="drop-zone q8-drop uniform-block" data-slot="{{ i }}"></div>
-          {% endfor %}
-        </div>
-        <div id="q8-feedback" class="mt-3 font-weight-bold text-success" style="font-size: 1.2rem;"></div>
-      </div>
-    {% endif %}
-
-    <!-- Navigation Buttons -->
-    <div class="quiz-navigation mt-4 d-flex justify-content-between" style="width: 300px;">
-      {% if qnum > 1 %}
-        <a href="/quiz/{{ qnum - 1 }}" class="btn btn-outline-secondary">
-          <i class="bi bi-arrow-left"></i> Previous
-        </a>
-      {% else %}
-        <div></div> <!-- Empty div for spacing -->
-      {% endif %}
-
-      {% if qnum < total_questions %}
-        {% if not is_completed %}
-          <button id="next-locked" class="btn btn-outline-secondary" disabled>
-            Next <i class="bi bi-arrow-right"></i>
-          </button>
-        {% else %}
-          <a href="/quiz/{{ qnum + 1 }}" class="btn btn-primary">
-            Next <i class="bi bi-arrow-right"></i>
-          </a>
-        {% endif %}
-      {% else %}
-        <a href="/result" class="btn btn-success">
-          Finish Quiz <i class="bi bi-check-circle"></i>
-        </a>
-      {% endif %}
+      {% endfor %}
     </div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const colorWheel = new iro.ColorPicker("#colorWheel", {
-          width: 220,
-          color: "#f00",
-          layout: [
-            { component: iro.ui.Wheel },
-            { component: iro.ui.Slider, options: { sliderType: 'value' } }
-          ]
-        });
+    <div class="right-col d-flex flex-column align-items-center">
+      <div class="color-wheel mb-3" id="colorWheel" style="width: 240px;"></div>
+      <div class="text-muted mb-2">
+        {% if is_completed %}
+        Your selection
+        {% else %}
+        Drag and drop here
+        {% endif %}
+      </div>
+      <div class="d-flex justify-content-center align-items-center gap-3">
+        {% if qnum == 6 %}
+        <div class="color-swatch uniform-block" style="background-color: #f88;"></div>
+        <div class="drop-zone uniform-block" data-correct-index="{{ question.correct_index + 1 }}" {% if previous_answer
+          %}style="background-color: {{ question.choices[previous_answer|int - 1] }}" {% endif %}></div>
+        <div class="color-swatch uniform-block" style="background-color: #660000;"></div>
+        {% elif qnum == 7 %}
+        <div class="color-swatch uniform-block" style="background-color: yellow;"></div>
+        <div class="drop-zone uniform-block" data-correct-index="{{ question.correct_index + 1 }}" {% if previous_answer
+          %}style="background-color: {{ question.choices[previous_answer|int - 1] }}" {% endif %}></div>
+        <div class="color-swatch uniform-block" style="background-color: blue;"></div>
+        {% endif %}
+      </div>
+      <div id="drop-feedback" class="font-weight-bold mt-2"></div>
+    </div>
+  </div>
+  {% elif question.type == 'drag' and question.drop_slots is defined %}
+  <div class="drag-q8 w-100 d-flex flex-column align-items-center">
+    <div class="d-flex flex-wrap justify-content-center mb-4">
+      {% for color in question.choices %}
+      <div class="color-block-container">
+        <div class="color-block uniform-block {% if is_completed %}disabled-color{% endif %}"
+          style="background-color: {{ color }};" data-color="{{ color }}"
+          draggable="{% if not is_completed %}true{% else %}false{% endif %}">
+        </div>
+        <div class="color-number">#{{ loop.index }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="d-flex justify-content-center flex-wrap">
+      {% for i in range(question.drop_slots) %}
+      <div class="drop-zone q8-drop uniform-block" data-slot="{{ i }}"></div>
+      {% endfor %}
+    </div>
+    <div id="q8-feedback" class="mt-3 font-weight-bold text-success" style="font-size: 1.2rem;"></div>
+  </div>
+  {% endif %}
+
+  <!-- Navigation Buttons -->
+
+
+  <div class="quiz-navigation mt-4 d-flex justify-content-between" style="width: 300px;">
+    {% if qnum > 1 %}
+    <a href="/quiz/{{ qnum - 1 }}" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left"></i> Previous
+    </a>
+
+    {% else %}
+    <div></div> <!-- Empty div for spacing -->
+    {% endif %}
+
+    {% if qnum < total_questions %} {% if not is_completed %} <button id="next-locked" class="btn btn-outline-secondary"
+      disabled>
+      Next <i class="bi bi-arrow-right"></i>
+      </button>
+      {% else %}
+      <a href="/quiz/{{ qnum + 1 }}" class="btn btn-primary">
+        Next <i class="bi bi-arrow-right"></i>
+      </a>
+      {% endif %}
+      {% else %}
+      <a href="/result" class="btn btn-success">
+        Finish Quiz <i class="bi bi-check-circle"></i>
+      </a>
+      {% endif %}
+  </div>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const colorWheel = new iro.ColorPicker("#colorWheel", {
+        width: 220,
+        color: "#f00",
+        layout: [
+          { component: iro.ui.Wheel },
+          { component: iro.ui.Slider, options: { sliderType: 'value' } }
+        ]
       });
-    </script>
+    });
+  </script>
 
   {% else %}
-    <h2>Thanks for completing the quiz!</h2>
-    <a href="/result" class="btn btn-success mt-4">View Your Score</a>
+  <h2>Thanks for completing the quiz!</h2>
+  <a href="/result" class="btn btn-success mt-4">View Your Score</a>
   {% endif %}
 </div>
 
@@ -204,248 +210,249 @@
 <script src="../static/drag_logic.js"></script>
 
 <style>
-.quiz-screen {
-  min-height: 90vh;
-  text-align: center;
-}
-
-/* Fixed image container sizes for consistent display */
-.mcq-grid-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
-  max-width: 900px;
-  margin: 0 auto 30px auto;
-  justify-items: center;
-}
-
-.mcq-grid-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 400px;
-}
-
-/* Fixed dimensions container for images */
-.image-container {
-  width: 100%;
-  height: 280px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-  border-radius: 14px;
-  border: 3px solid #e0e0e0;
-  padding: 10px;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.12);
-  transition: all 0.3s ease;
-  overflow: hidden; /* Ensure content stays within bounds */
-}
-
-.image-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.18);
-  border-color: #007bff;
-}
-
-/* Image styling within container */
-.image-container img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-/* Selected container */
-.selected-container {
-  border: 4px solid #28a745 !important;
-  box-shadow: 0 0 18px rgba(40, 167, 69, 0.45) !important;
-}
-
-/* Correct answer highlight */
-.correct-container {
-  border: 4px solid #28a745 !important;
-  box-shadow: 0 0 20px rgba(40, 167, 69, 0.5) !important;
-}
-
-/* Text options */
-.q-option {
-  background-color: #f8f9fa;
-  border: 2px solid #ddd;
-  padding: 12px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  width: 100%;
-  min-height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.q-option:hover {
-  background-color: #e2e6ea;
-  border-color: #007bff;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-}
-
-.selected-option {
-  border: 3px solid #28a745 !important;
-  box-shadow: 0 0 10px rgba(40, 167, 69, 0.3);
-}
-
-/* Correct answer highlight for text options */
-.correct-answer-border {
-  border: 3px solid #28a745 !important;
-  box-shadow: 0 0 15px rgba(40, 167, 69, 0.4) !important;
-}
-
-.completed-option {
-  cursor: default !important;
-  opacity: 0.8;
-}
-
-/* Label box styling */
-.label-box {
-  width: 40px;
-  height: 40px;
-  background-color: #2c3e50;
-  color: white;
-  font-weight: bold;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 12px;
-  border-radius: 8px;
-  box-shadow: 0 3px 5px rgba(0,0,0,0.15);
-  z-index: 1;
-}
-
-/* Drag and drop styling */
-.disabled-color {
-  cursor: not-allowed !important;
-  opacity: 0.6;
-}
-
-.color-block,
-.drop-zone,
-.q8-drop,
-.color-swatch {
-  width: 80px;
-  height: 80px;
-  border-radius: 10px;
-  border: 2px solid #555;
-  margin: 10px;
-  cursor: grab;
-}
-
-.color-block-container {
-  position: relative;
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.color-number {
-  font-size: 14px;
-  font-weight: bold;
-  margin-top: 5px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 2px 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.color-block {
-  margin: 0;
-}
-
-.drag-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-  margin-bottom: 20px;
-}
-
-.drag-q67-layout {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  gap: 40px;
-  align-items: start;
-}
-
-.color-wheel {
-  margin-bottom: 10px;
-}
-
-/* Style for hint and feedback */
-.hint-feedback-container {
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-#hint {
-  text-align: center;
-  border-left: 5px solid #17a2b8;
-  transition: all 0.3s ease;
-  margin-bottom: 0;
-}
-
-#feedback {
-  text-align: center;
-  border-left: 5px solid #dc3545;
-  transition: all 0.3s ease;
-  margin-top: 0;
-}
-
-/* Responsive adjustments */
-@media (max-width: 992px) {
-  .mcq-grid-item {
-    max-width: 350px;
+  .quiz-screen {
+    min-height: 90vh;
+    text-align: center;
   }
-  
-  .image-container {
-    height: 250px;
-  }
-}
 
-@media (max-width: 768px) {
+  /* Fixed image container sizes for consistent display */
   .mcq-grid-container {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto 30px auto;
+    justify-items: center;
   }
-  
+
   .mcq-grid-item {
-    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
   }
-  
+
+  /* Fixed dimensions container for images */
   .image-container {
-    height: 220px;
+    width: 100%;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 14px;
+    border: 3px solid #e0e0e0;
+    padding: 10px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    /* Ensure content stays within bounds */
   }
-}
 
-/* Specific fix for Question 2 Option A image to match other options */
-.quiz-screen[data-question="2"] .mcq-grid-item:first-child .image-container {
-  height: 280px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-}
+  .image-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.18);
+    border-color: #007bff;
+  }
 
-.quiz-screen[data-question="2"] .mcq-grid-item:first-child .image-container img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
+  /* Image styling within container */
+  .image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* Selected container */
+  .selected-container {
+    border: 4px solid #28a745 !important;
+    box-shadow: 0 0 18px rgba(40, 167, 69, 0.45) !important;
+  }
+
+  /* Correct answer highlight */
+  .correct-container {
+    border: 4px solid #28a745 !important;
+    box-shadow: 0 0 20px rgba(40, 167, 69, 0.5) !important;
+  }
+
+  /* Text options */
+  .q-option {
+    background-color: #f8f9fa;
+    border: 2px solid #ddd;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    width: 100%;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .q-option:hover {
+    background-color: #e2e6ea;
+    border-color: #007bff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .selected-option {
+    border: 3px solid #28a745 !important;
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.3);
+  }
+
+  /* Correct answer highlight for text options */
+  .correct-answer-border {
+    border: 3px solid #28a745 !important;
+    box-shadow: 0 0 15px rgba(40, 167, 69, 0.4) !important;
+  }
+
+  .completed-option {
+    cursor: default !important;
+    opacity: 0.8;
+  }
+
+  /* Label box styling */
+  .label-box {
+    width: 40px;
+    height: 40px;
+    background-color: #2c3e50;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+    z-index: 1;
+  }
+
+  /* Drag and drop styling */
+  .disabled-color {
+    cursor: not-allowed !important;
+    opacity: 0.6;
+  }
+
+  .color-block,
+  .drop-zone,
+  .q8-drop,
+  .color-swatch {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    border: 2px solid #555;
+    margin: 10px;
+    cursor: grab;
+  }
+
+  .color-block-container {
+    position: relative;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .color-number {
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2px 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .color-block {
+    margin: 0;
+  }
+
+  .drag-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .drag-q67-layout {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .color-wheel {
+    margin-bottom: 10px;
+  }
+
+  /* Style for hint and feedback */
+  .hint-feedback-container {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  #hint {
+    text-align: center;
+    border-left: 5px solid #17a2b8;
+    transition: all 0.3s ease;
+    margin-bottom: 0;
+  }
+
+  #feedback {
+    text-align: center;
+    border-left: 5px solid #dc3545;
+    transition: all 0.3s ease;
+    margin-top: 0;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 992px) {
+    .mcq-grid-item {
+      max-width: 350px;
+    }
+
+    .image-container {
+      height: 250px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .mcq-grid-container {
+      grid-template-columns: 1fr;
+    }
+
+    .mcq-grid-item {
+      max-width: 320px;
+    }
+
+    .image-container {
+      height: 220px;
+    }
+  }
+
+  /* Specific fix for Question 2 Option A image to match other options */
+  .quiz-screen[data-question="2"] .mcq-grid-item:first-child .image-container {
+    height: 280px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .quiz-screen[data-question="2"] .mcq-grid-item:first-child .image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
 </style>
 
 <script>
@@ -454,29 +461,28 @@
     const options = document.querySelectorAll(".q-option, .image-container");
     const feedback = document.getElementById("feedback");
     const hint = document.getElementById("hint");
-    
+
     // Get question status
     const isCompleted = {{ 'true' if is_completed else 'false' }};
-    let attempts = {{ attempts|default(0) }};
+    let attempts = {{ attempts | default(0) }};
     const hintShown = {{ 'true' if hint_shown else 'false' }};
-    
-    // If question is already completed, don't add click handlers
-    if (isCompleted) {
-      return;
-    }
+  // If question is already completed, don't add click handlers
+  if (isCompleted) {
+    return;
+  }
 
-    options.forEach(option => {
-      option.addEventListener("click", function () {
-        if (isCompleted) return; // Don't allow changes if already completed
-        
-        const selected = this.dataset.option;
-        const qnum = parseInt(window.location.pathname.split("/quiz/")[1]);
+  options.forEach(option => {
+    option.addEventListener("click", function () {
+      if (isCompleted) return; // Don't allow changes if already completed
 
-        fetch("/submit_answer", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ qnum: qnum, answer: selected })
-        })
+      const selected = this.dataset.option;
+      const qnum = parseInt(window.location.pathname.split("/quiz/")[1]);
+
+      fetch("/submit_answer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ qnum: qnum, answer: selected })
+      })
         .then(res => res.json())
         .then(data => {
           // Mark the selected option
@@ -487,19 +493,19 @@
               opt.classList.remove("selected-container");
             }
           });
-          
+
           // Add the appropriate selected class based on element type
           if (this.classList.contains("q-option")) {
             this.classList.add("selected-option");
           } else {
             this.classList.add("selected-container");
           }
-          
+
           if (data.correct) {
             feedback.style.display = "block";
             feedback.className = "alert alert-success";
             feedback.textContent = "Correct!";
-            
+
             // Update navigation
             const nextButton = document.getElementById("next-locked");
             if (nextButton) {
@@ -508,7 +514,7 @@
               nextButton.disabled = false;
               nextButton.innerHTML = `<a href="/quiz/${qnum + 1}" style="color: inherit; text-decoration: none;">Next <i class="bi bi-arrow-right"></i></a>`;
             }
-            
+
             // Reload the page to show completed state (no auto-navigation)
             window.location.reload();
           } else {
@@ -517,7 +523,7 @@
             feedback.textContent = data.attempts === 1
               ? "Oops! One more try!"
               : "Sorry, you've used all your attempts.";
-            
+
             if (data.attempts === 1 && hint) {
               // Show hint immediately with a smooth animation
               hint.style.display = "block";
@@ -526,7 +532,7 @@
                 hint.style.opacity = "1";
               }, 10);
             }
-            
+
             if (data.attempts > 1) {
               // Update navigation
               const nextButton = document.getElementById("next-locked");
@@ -536,15 +542,15 @@
                 nextButton.disabled = false;
                 nextButton.innerHTML = `<a href="/quiz/${qnum + 1}" style="color: inherit; text-decoration: none;">Next <i class="bi bi-arrow-right"></i></a>`;
               }
-              
+
               // Reload the page to show completed state (no auto-navigation)
               window.location.reload();
             }
           }
         })
         .catch(err => console.error("Submission error:", err));
-      });
     });
+  });
   });
 </script>
 
