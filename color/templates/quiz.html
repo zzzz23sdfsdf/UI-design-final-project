@@ -4,12 +4,36 @@
 <!-- Load iro.js color wheel -->
 <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 
-<div class="quiz-screen d-flex flex-column justify-content-center align-items-center" {% if question
-  %}data-question="{{ qnum }}" {% endif %}>
+<div class="quiz-screen d-flex flex-column justify-content-center align-items-center" {% if question %}data-question="{{ qnum }}" {% endif %}>
 
   {% if qnum == 0 %}
   <h1 class="mb-4">Ready to take the quiz?</h1>
   <br>
+  <div class="quiz-rules card shadow-sm mb-5 px-4 py-3 text-left" style="max-width: 600px;">
+    <h4 class="mb-3" style="color: black;">📋 Quiz Rules</h4>
+    <ul class="list-unstyled">
+      <li class="mb-2"><strong>Question Types:</strong> 
+        <ul>
+          <li>
+            Questions 1-5 are <strong>Multiple Choice</strong>
+          </li>
+          <li>
+            Questions 6-8 are <strong>Drag and Drop</strong>
+          </li>
+        </ul>
+
+      </li>
+
+      <li class="mb-2"><strong>Scoring:</strong> You have <strong>2 attempts</strong> per question.
+        <ul>
+          <li> You get <strong>full points</strong> if your answer is correct on the <strong>first try.</strong></li>
+          <li>Then, a hint will be shown.</li>
+          <li> You get <strong>half a point</strong> if your answer is correct on the <strong>second try.</strong></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  
   <div class="d-flex justify-content-center">
     <a href="/learn/4" class="btn btn-outline-primary btn-lg mr-4">Review </a>
     <a href="/quiz/1" class="btn btn-primary btn-lg"> Start Quiz!</a>
@@ -26,39 +50,6 @@
   </div>
 
   <h2 class="mb-3">Question {{ qnum }}:<br>{{ question.question }}</h2>
-
-  <!-- Hint and Feedback Container -->
-  <div class="hint-feedback-container mb-4">
-    {% if is_completed %}
-    <!-- Display the previously submitted answer (read-only) -->
-    <div
-      class="alert {% if (qnum == 6 or qnum == 7) and previous_answer|int == question.correct_index + 1 or qnum == 8 or previous_answer == question.correct %}alert-success{% else %}alert-danger{% endif %} mb-4">
-      <strong>You've already answered this question.</strong><br>
-      {% if (qnum == 6 or qnum == 7) and previous_answer|int == question.correct_index + 1 or qnum == 8 or
-      previous_answer == question.correct %}
-      <span class="text-success">✓ Correct!</span>
-      {% else %}
-      <span class="text-danger">✗ Incorrect.</span>
-      {% if question.type == 'mcq' %}
-      The correct answer was {{ question.correct }}.
-      {% elif question.type == 'drag' and (qnum == 6 or qnum == 7) %}
-      The correct choice was #{{ question.correct_index + 1 }}.
-      {% endif %}
-      {% endif %}
-    </div>
-    {% endif %}
-
-    <!-- Hint is now directly under the question title -->
-    {% if question.hint and not is_completed %}
-    <div id="hint" class="alert alert-info mb-2" {% if hint_shown %}style="display: block;" {% else
-      %}style="display: none;" {% endif %}>
-      <strong>Hint:</strong> {{ question.hint }}
-    </div>
-    {% endif %}
-
-    <!-- Feedback message appears below the hint -->
-    <div id="feedback" class="alert alert-danger" style="display: none;"></div>
-  </div>
 
   {% if question.image %}
   <img src="{{ question.image }}" class="mb-4 img-fluid" alt="Question Image" style="max-width: 500px;">
@@ -157,35 +148,63 @@
   </div>
   {% endif %}
 
+  <!-- Add hint and "already answered" message after options -->
+  <div class="hint-feedback-container mt-4 mb-4">
+    <!-- "Already answered" message -->
+    {% if is_completed %}
+    <div class="alert {% if (qnum == 6 or qnum == 7) and previous_answer|int == question.correct_index + 1 or qnum == 8 or previous_answer == question.correct %}alert-success{% else %}alert-danger{% endif %} mb-3">
+      <strong>You've already answered this question.</strong><br>
+      {% if (qnum == 6 or qnum == 7) and previous_answer|int == question.correct_index + 1 or qnum == 8 or previous_answer == question.correct %}
+      <span class="text-success">✓ Correct!</span>
+      {% else %}
+      <span class="text-danger">✗ Incorrect.</span>
+      {% if question.type == 'mcq' %}
+      The correct answer was {{ question.correct }}.
+      {% elif question.type == 'drag' and (qnum == 6 or qnum == 7) %}
+      The correct choice was #{{ question.correct_index + 1 }}.
+      {% endif %}
+      {% endif %}
+    </div>
+    {% endif %}
+  
+    <!-- Hint section -->
+    {% if question.hint and not is_completed %}
+    <div id="hint" class="alert alert-info mb-3" {% if hint_shown %}style="display: block;" {% else %}style="display: none;" {% endif %}>
+      <strong>Hint:</strong> {{ question.hint }}
+    </div>
+    {% endif %}
+  
+    <!-- Feedback message -->
+    <div id="feedback" class="alert mb-3" style="display: none;"></div>
+  </div>
+
+
   <!-- Navigation Buttons -->
-
-
-  <div class="quiz-navigation mt-4 d-flex justify-content-between" style="width: 300px;">
+  <div class="quiz-navigation mt-4 d-flex justify-content-between" style="width: 100%; max-width: 900px; margin: 0 auto;">
     {% if qnum > 1 %}
-    <a href="/quiz/{{ qnum - 1 }}" class="btn btn-outline-secondary">
+    <a href="/quiz/{{ qnum - 1 }}" class="btn btn-outline-secondary nav-btn nav-prev">
       <i class="bi bi-arrow-left"></i> Previous
     </a>
-
     {% else %}
-    <div></div> <!-- Empty div for spacing -->
+    <div class="nav-spacer"></div> <!-- Empty div for spacing -->
     {% endif %}
 
-    {% if qnum < total_questions %} {% if not is_completed %} <button id="next-locked" class="btn btn-outline-secondary"
-      disabled>
-      Next <i class="bi bi-arrow-right"></i>
+    {% if qnum < total_questions %}
+      {% if not is_completed %}
+      <button id="next-locked" class="btn btn-outline-secondary nav-btn nav-next" disabled>
+        Next <i class="bi bi-arrow-right"></i>
       </button>
       {% else %}
-      <a href="/quiz/{{ qnum + 1 }}" class="btn btn-primary">
+      <a href="/quiz/{{ qnum + 1 }}" class="btn btn-primary nav-btn nav-next">
         Next <i class="bi bi-arrow-right"></i>
       </a>
       {% endif %}
-      {% else %}
-      <a href="/result" class="btn btn-success">
-        Finish Quiz <i class="bi bi-check-circle"></i>
-      </a>
-      {% endif %}
+    {% else %}
+    <a href="/result" class="btn btn-success nav-btn nav-next">
+      Finish Quiz <i class="bi bi-check-circle"></i>
+    </a>
+    {% endif %}
   </div>
-
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -392,25 +411,55 @@
     margin-bottom: 10px;
   }
 
-  /* Style for hint and feedback */
+  /* Navigation button styling */
+  .quiz-navigation {
+    padding: 0 10px;
+    margin-top: 30px !important;
+  }
+
+  .nav-btn {
+    padding: 10px 20px;
+    font-weight: 500;
+    border-radius: 6px; /* Rectangular shape with slightly rounded corners */
+    transition: all 0.3s ease;
+    min-width: 120px; /* Ensures consistent width */
+    text-align: center;
+  }
+
+  .nav-prev {
+    margin-left: 0;
+  }
+
+  .nav-next {
+    margin-right: 0;
+  }
+
+  .nav-btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  }
+
+  .nav-spacer {
+    width: 120px; /* Approximately the width of a button */
+  }
+
+  /* Hint and feedback styling */
   .hint-feedback-container {
     width: 100%;
-    max-width: 700px;
+    max-width: 800px;
     margin: 0 auto;
   }
 
   #hint {
-    text-align: center;
+    text-align: left;
     border-left: 5px solid #17a2b8;
     transition: all 0.3s ease;
-    margin-bottom: 0;
   }
 
   #feedback {
     text-align: center;
     border-left: 5px solid #dc3545;
     transition: all 0.3s ease;
-    margin-top: 0;
   }
 
   /* Responsive adjustments */
@@ -435,6 +484,16 @@
 
     .image-container {
       height: 220px;
+    }
+    
+    .nav-btn {
+      padding: 8px 16px;
+      font-size: 14px;
+      min-width: 100px;
+    }
+    
+    .nav-spacer {
+      width: 100px;
     }
   }
 
@@ -466,74 +525,47 @@
     const isCompleted = {{ 'true' if is_completed else 'false' }};
     let attempts = {{ attempts | default(0) }};
     const hintShown = {{ 'true' if hint_shown else 'false' }};
-  // If question is already completed, don't add click handlers
-  if (isCompleted) {
-    return;
-  }
+  
+    // If question is already completed, don't add click handlers
+    if (isCompleted) {
+      return;
+    }
 
-  options.forEach(option => {
-    option.addEventListener("click", function () {
-      if (isCompleted) return; // Don't allow changes if already completed
+    options.forEach(option => {
+      option.addEventListener("click", function () {
+        if (isCompleted) return; // Don't allow changes if already completed
 
-      const selected = this.dataset.option;
-      const qnum = parseInt(window.location.pathname.split("/quiz/")[1]);
+        const selected = this.dataset.option;
+        const qnum = parseInt(window.location.pathname.split("/quiz/")[1]);
 
-      fetch("/submit_answer", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ qnum: qnum, answer: selected })
-      })
-        .then(res => res.json())
-        .then(data => {
-          // Mark the selected option
-          options.forEach(opt => {
-            if (opt.classList.contains("q-option")) {
-              opt.classList.remove("selected-option");
+        fetch("/submit_answer", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ qnum: qnum, answer: selected })
+        })
+          .then(res => res.json())
+          .then(data => {
+            // Mark the selected option
+            options.forEach(opt => {
+              if (opt.classList.contains("q-option")) {
+                opt.classList.remove("selected-option");
+              } else {
+                opt.classList.remove("selected-container");
+              }
+            });
+
+            // Add the appropriate selected class based on element type
+            if (this.classList.contains("q-option")) {
+              this.classList.add("selected-option");
             } else {
-              opt.classList.remove("selected-container");
-            }
-          });
-
-          // Add the appropriate selected class based on element type
-          if (this.classList.contains("q-option")) {
-            this.classList.add("selected-option");
-          } else {
-            this.classList.add("selected-container");
-          }
-
-          if (data.correct) {
-            feedback.style.display = "block";
-            feedback.className = "alert alert-success";
-            feedback.textContent = "Correct!";
-
-            // Update navigation
-            const nextButton = document.getElementById("next-locked");
-            if (nextButton) {
-              nextButton.classList.remove("btn-outline-secondary");
-              nextButton.classList.add("btn-primary");
-              nextButton.disabled = false;
-              nextButton.innerHTML = `<a href="/quiz/${qnum + 1}" style="color: inherit; text-decoration: none;">Next <i class="bi bi-arrow-right"></i></a>`;
+              this.classList.add("selected-container");
             }
 
-            // Reload the page to show completed state (no auto-navigation)
-            window.location.reload();
-          } else {
-            feedback.style.display = "block";
-            feedback.className = "alert alert-danger";
-            feedback.textContent = data.attempts === 1
-              ? "Oops! One more try!"
-              : "Sorry, you've used all your attempts.";
+            if (data.correct) {
+              feedback.style.display = "block";
+              feedback.className = "alert alert-success";
+              feedback.textContent = "Correct!";
 
-            if (data.attempts === 1 && hint) {
-              // Show hint immediately with a smooth animation
-              hint.style.display = "block";
-              hint.style.opacity = "0";
-              setTimeout(() => {
-                hint.style.opacity = "1";
-              }, 10);
-            }
-
-            if (data.attempts > 1) {
               // Update navigation
               const nextButton = document.getElementById("next-locked");
               if (nextButton) {
@@ -545,12 +577,40 @@
 
               // Reload the page to show completed state (no auto-navigation)
               window.location.reload();
+            } else {
+              feedback.style.display = "block";
+              feedback.className = "alert alert-danger";
+              feedback.textContent = data.attempts === 1
+                ? "Oops! One more try!"
+                : "Sorry, you've used all your attempts.";
+
+              if (data.attempts === 1 && hint) {
+                // Show hint immediately with a smooth animation
+                hint.style.display = "block";
+                hint.style.opacity = "0";
+                setTimeout(() => {
+                  hint.style.opacity = "1";
+                }, 10);
+              }
+
+              if (data.attempts > 1) {
+                // Update navigation
+                const nextButton = document.getElementById("next-locked");
+                if (nextButton) {
+                  nextButton.classList.remove("btn-outline-secondary");
+                  nextButton.classList.add("btn-primary");
+                  nextButton.disabled = false;
+                  nextButton.innerHTML = `<a href="/quiz/${qnum + 1}" style="color: inherit; text-decoration: none;">Next <i class="bi bi-arrow-right"></i></a>`;
+                }
+
+                // Reload the page to show completed state (no auto-navigation)
+                window.location.reload();
+              }
             }
-          }
-        })
-        .catch(err => console.error("Submission error:", err));
+          })
+          .catch(err => console.error("Submission error:", err));
+      });
     });
-  });
   });
 </script>
 
