@@ -34,12 +34,12 @@
   <div class="row learn-descriptions">
     <div class="col-md-5 d-flex flex-column align-items-center">
       {% set first_key, first_url = lesson_images.items() | list | first %}
-        <img src="{{ first_url }}" alt="Image {{ first_key }}" class="img-fluid lesson-image mb-3 colorimages"
-          style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 250px;">
+      <img src="{{ first_url }}" alt="Image {{ first_key }}" class="img-fluid lesson-image mb-3 colorimages"
+        style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 250px;">
     </div>
 
     <div class="col-md-7 d-flex flex-column align-items-center justify-content-center">
-      <h4 class="fw-semibold mb-3 descrition-title">About {{ lesson_name }} Colors</h4>
+      <h4 class="fw-semibold mb-3 description-title">About {{ lesson_name }} Colors</h4>
       <p class="description-content" style="line-height: 1.6;">{{ lesson_description }}</p>
     </div>
   </div>
@@ -48,10 +48,30 @@
 
   <!-- TODO: populate color galleries -->
 
-  <!-- <div class="row">
-    {{ lesson_name }} Color Scheme Gallery!
-  </div> -->
-  
+  <div class="row">
+    <div class="col-md-12 d-flex flex-column align-items-center">
+      <h4 class="fw-semibold mb-3 gallery-title"> {{ lesson_name }} Color Scheme Gallery!</h4>
+    </div>
+
+    <div class="col-md-12 d-flex flex-column align-items-center">
+      <div class="row gallery-instructions">
+        Click on the image to see it in full scale!
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    {% for key, image_url in lesson_examples.items() %}
+    <div class="col-md-4 d-flex justify-content-center mb-4">
+      <div class="image-card p-3">
+        <a href="{{ image_url }}" target="_blank" rel="noopener noreferrer">
+          <img src="{{ image_url }}" alt="Image {{ key }}" class="img-fluid rounded">
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
 
   <!-- <div class="row">
     <div class="col-md-5 d-flex flex-column align-items-center">
@@ -76,7 +96,7 @@
     {% if lesson_number < 4 %} <a href="/learn/{{ lesson_number + 1 }}" id="next-button"><button>Next</button></a>
       {% elif lesson_number == 4 %}
       <a href="/quiz/0" id="next-button"><button>Start Quiz!</button></a>
-    {% endif %}
+      {% endif %}
   </div>
 
 </div>
