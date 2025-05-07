@@ -9,10 +9,6 @@ body {
   flex: 1;
 }
 
-.instructions{
-  font-size: 20px;
-}
-
 .color-display {
   flex: 1;
   display: flex;
@@ -69,7 +65,7 @@ body {
   margin-top: 30px;
 }
 
-.descrition-title{
+.description-title{
   font-size: 30px;
 }
 
@@ -125,4 +121,40 @@ button:hover {
   background-color:white;
   border-radius:15px;
   width: fluid;
+}
+
+.gallery-title{
+  padding-top:30px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.gallery-box {
+  padding-top: 40px;
+  background-color: white;
+  padding-bottom: 30px;
+  border-radius: 15px;
+}
+
+.image-card {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease;
+}
+
+.image-card:hover {
+  transform: translateY(-5px);
+}
+
+.lesson-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.gallery-instructions{
+  font-size: 18px;
+  padding-bottom:40px;
+  color: #646464;
 }
