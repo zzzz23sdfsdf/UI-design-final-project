@@ -606,7 +606,7 @@ img.q-option {
 
 @media (max-width: 768px) {
   .mcq-grid-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(4, 1fr);
   }
   
   .mcq-grid-item {
@@ -678,4 +678,182 @@ img.q-option {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+
+
+/* Navigation button styling */
+.quiz-navigation {
+  padding: 0 10px;
+  margin-top: 30px !important;
+}
+
+.nav-btn {
+  padding: 10px 20px;
+  font-weight: 500;
+  border-radius: 6px; /* Changed from 30px to 6px for rectangular shape */
+  transition: all 0.3s ease;
+  min-width: 120px; /* Ensures consistent width */
+  text-align: center;
+}
+
+.nav-prev {
+  margin-left: 0;
+}
+
+.nav-next {
+  margin-right: 0;
+}
+
+.nav-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.nav-spacer {
+  width: 120px; /* Approximately the width of a button */
+}
+
+/* Specific styling for next/finish buttons */
+#next-locked {
+  background-color: #f8f9fa;
+  border-color: #6c757d;
+  color: #6c757d;
+}
+
+.btn-primary.nav-next {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+}
+
+.btn-success.nav-next {
+  background-color: #28a745; 
+  border-color: #28a745;
+  color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .nav-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    min-width: 100px;
+  }
+  
+  .nav-spacer {
+    width: 100px;
+  }
+}
+
+
+/* Navigation button styling */
+.quiz-navigation {
+  padding: 0 10px;
+  margin-top: 30px !important;
+}
+
+.nav-btn {
+  padding: 10px 20px;
+  font-weight: 500;
+  border-radius: 6px; /* Rectangular shape with slightly rounded corners */
+  transition: all 0.3s ease;
+  min-width: 120px; /* Ensures consistent width */
+  text-align: center;
+}
+
+.nav-prev {
+  margin-left: 0;
+}
+
+.nav-next {
+  margin-right: 0;
+}
+
+.nav-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.nav-spacer {
+  width: 120px; /* Approximately the width of a button */
+}
+
+/* Hint and feedback styling */
+.hint-feedback-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto 30px auto;
+}
+
+#hint {
+  text-align: left;
+  border-left: 5px solid #17a2b8;
+  transition: all 0.3s ease;
+}
+
+#feedback {
+  text-align: center;
+  border-left: 5px solid #dc3545;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .nav-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+    min-width: 100px;
+  }
+  
+  .nav-spacer {
+    width: 100px;
+  }
+}
+
+
+/* Navigation button styling */
+.nav-btn {
+  padding: 10px 20px;
+  font-weight: 500;
+  border-radius: 6px; /* Rectangular shape with slightly rounded corners */
+  transition: all 0.3s ease;
+  min-width: 120px; /* Ensures consistent width */
+  text-align: center;
+}
+
+.nav-prev {
+  margin-left: 0;
+}
+
+.nav-next {
+  margin-right: 0;
+}
+
+.nav-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.nav-spacer {
+  width: 120px; /* Approximately the width of a button */
+}
+
+/* Hint and feedback styling */
+.hint-feedback-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+#hint {
+  text-align: left;
+  border-left: 5px solid #17a2b8;
+  transition: all 0.3s ease;
+}
+
+#feedback {
+  text-align: center;
+  border-left: 5px solid #dc3545;
+  transition: all 0.3s ease;
 }
