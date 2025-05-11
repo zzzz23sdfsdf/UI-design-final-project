@@ -43,8 +43,11 @@ A modern web browser
 
 `source venv/bin/activate`  # Windows: venv\Scripts\activate
 
+
 ## 3. Install required packages
-`pip install -r requirements.txt`
+
+```bash
+pip install Flask==2.3.2
 
 ## 4. Run the Flask app: 
 `python app.py`
