@@ -46,8 +46,7 @@ A modern web browser
 
 ## 3. Install required packages
 
-```bash
-pip install Flask==2.3.2
+`pip install Flask==2.3.2`
 
 ## 4. Run the Flask app: 
 `python app.py`
