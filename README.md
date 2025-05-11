@@ -34,20 +34,20 @@ A modern web browser
 
 ## 1. Clone this repository
 
-`git clone https://github.com/your-username/your-repo-name.git`
+`git clone https://github.com/your-username/your-repo-name.git`␣␣
 `cd your-repo-name`
 
 ## 2. Set up a virtual environment (optional but recommended)
-`python -m venv venv`
+`python -m venv venv`␣␣
 `source venv/bin/activate`  # Windows: venv\Scripts\activate
 
 ## 3. Install required packages
 `pip install -r requirements.txt`
 
 ## 4. Run the Flask app: 
-`python app.py`
+`python app.py`␣␣
 Or, if using Flask's CLI:
-`flask run`
+`flask run`␣␣
 
 ## 5. Open the app in your browser
 Go to:
