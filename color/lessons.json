@@ -1,42 +1,52 @@
 {
     "0": {
         "name": "Monochromatic",
-        "description": "Monochromatic colors use one color with various tints, tones, and shades for the painting. The color scheme is simple but powerful.",
+        "description": "Monochromatic color schemes are built from variations of a single hue — adding black, white, or gray to create depth and nuance. This approach results in a clean, harmonious look that feels calm, elegant, and focused. Because it relies on just one base color, it emphasizes form and composition, often used in minimalist or contemplative designs.",
         "images": {
-            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/monochromatic1.png",
-            "2": "https://i0.wp.com/doodlewash.com/wp-content/uploads/2020/06/One-Color-Monochromatic-Watercolor-Painting-Tutorial.jpg?w=1024&ssl=1"
+            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/monochromatic1.png"
+        },
+        "examples": {
+            "1": "https://i0.wp.com/doodlewash.com/wp-content/uploads/2020/06/One-Color-Monochromatic-Watercolor-Painting-Tutorial.jpg?w=1024&ssl=1"
         }
     },
     "1": {
         "name": "Complementary",
-        "description": "Complementary colors lie directly across the color wheel from each other and create a powerful duo.",
+        "description": "Complementary colors sit directly opposite each other on the color wheel — like red and green or blue and orange. When used together, they create striking contrast and vibrant energy. This scheme evokes excitement, boldness, and drama, and is often used in advertising or sports branding to grab attention and emphasize high stakes.",
         "images": {
-            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/complementary1.png",
-            "2": "https://pbs.twimg.com/media/Ge10MFlbkAAWfrs?format=jpg&name=medium"
+            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/complementary1.png"
+        },
+        "examples": {
+            "1": "https://pbs.twimg.com/media/Ge10MFlbkAAWfrs?format=jpg&name=medium"
         }
     },
     "2": {
         "name": "Analogous",
-        "description": "Analogous color uses colors that are next to each other on the color wheel. Usually match well and create serene designs.",
+        "description": "Analogous colors are neighbors on the color wheel, such as blue, teal, and green. They naturally blend together, creating a soft and cohesive look that feels peaceful, warm, and inviting. This scheme is common in nature and is ideal for designs that aim to soothe, unify, or guide the eye in a gentle way.",
         "images": {
-            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/analogous1.png",
-            "2": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/analogous2.jpg"
+            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/analogous1.png"
+        },
+        "examples": {
+            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/analogous2.jpg"
         }
     },
     "3": {
         "name": "Triadic",
-        "description": "Triadic colors use three evenly spaced colors on the color wheel. It provides strong visual contrast with harmony.",
+        "description": "Triadic color schemes use three colors evenly spaced on the color wheel, like red, yellow, and blue. This balance creates vibrant harmony with lively contrast. It feels energetic, playful, and dynamic—great for youthful designs or brands that want to stand out without clashing. Successful triadic palettes rely on one dominant color with two accents.",
         "images": {
-            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/triadic1.png",
-            "2": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/triadic2.png"
+            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/triadic1.png"
+        },
+        "examples": {
+            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/triadic2.png"
         }
     },
     "4": {
         "name": "Tetradic",
-        "description": "Tetradic uses four colors in two complementary pairs. It offers rich color diversity and balance.",
+        "description": "Tetradic (or double-complementary) schemes use four colors arranged into two complementary pairs. This creates a rich, layered palette full of variety and contrast. When used skillfully, it feels bold and complex, evoking creativity and balance. Tetradic designs work best when one color dominates and the others support it with consistent tone or saturation.",
         "images": {
-            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/tetradic1.png",
-            "2": "https://www.claude-monet.com/assets/img/paintings/regatta-at-argenteuil.jpg"
+            "1": "https://raw.githubusercontent.com/zzzz23sdfsdf/UI-design-final-project/refs/heads/main/learn-images/tetradic1.png"
+        },
+        "examples": {
+            "1": "https://www.claude-monet.com/assets/img/paintings/regatta-at-argenteuil.jpg"
         }
     }
 }
