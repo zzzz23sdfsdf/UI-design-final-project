@@ -36,7 +36,7 @@ A modern web browser
 
 `git clone https://github.com/zzzz23sdfsdf/UI-design-final-project.git
 
-`cd your-repo-name`
+`cd UI-design-final-project`
 
 ## 2. Set up a virtual environment (optional but recommended)
 `python -m venv venv`
