@@ -34,7 +34,7 @@ A modern web browser
 
 ## 1. Clone this repository and get into the correct direction
 
-`git clone https://github.com/zzzz23sdfsdf/UI-design-final-project.git
+`git clone https://github.com/zzzz23sdfsdf/UI-design-final-project.git`
 
 `cd UI-design-final-project`
 
