@@ -34,7 +34,7 @@ A modern web browser
 
 ## 1. Clone this repository
 
-`git clone https://github.com/your-username/your-repo-name.git`
+`git clone https://github.com/zzzz23sdfsdf/UI-design-final-project.git
 
 `cd your-repo-name`
 
