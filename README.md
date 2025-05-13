@@ -32,28 +32,21 @@ pip (Python package installer)
 A modern web browser
 
 
-## 1. Clone this repository
+## 1. Clone this repository and get into the correct direction
 
 `git clone https://github.com/zzzz23sdfsdf/UI-design-final-project.git
 
 `cd UI-design-final-project`
 
-## 2. Set up a virtual environment (optional but recommended)
-`python -m venv venv`
+`cd color`
 
-`source venv/bin/activate`  # Windows: venv\Scripts\activate
+## 2. Run the program (both python3 and python are fine)
 
+`python3 server.py`
 
-## 3. Install required packages
-
-`pip install Flask==2.3.2`
-
-## 4. Run the Flask app: 
-`python app.py`
-
-Or, if using Flask's CLI:
-`flask run`
-
-## 5. Open the app in your browser
+## 3. Open the app in your browser
 Go to:
-`http://127.0.0.1:5000`
+`http://127.0.0.1:5001`
+
+## 4. (optional) Delete the directory 
+rm -rf UI-design-final-project
