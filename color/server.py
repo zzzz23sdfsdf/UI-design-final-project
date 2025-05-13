@@ -65,6 +65,7 @@ def learn_lesson(lesson_number):
     lesson_name = lesson_info['name']
     lesson_description = lesson_info['description']
     lesson_images = lesson_info['images']
+    lesson_examples = lesson_info['examples']
 
     num_boxes_map = {
     0: 3,  # Monochromatic
@@ -79,7 +80,7 @@ def learn_lesson(lesson_number):
     user_id = "user1"
     saved_color = color_store.get(user_id, {}).get(lesson_number)
 
-    return render_template('learn.html', lesson_name=lesson_name, lesson_number=lesson_number, lesson_images=lesson_images, num_boxes=num_boxes, saved_color=saved_color, lesson_description = lesson_description, valid=True)
+    return render_template('learn.html', lesson_name=lesson_name, lesson_number=lesson_number, lesson_images=lesson_images, lesson_examples = lesson_examples, num_boxes=num_boxes, saved_color=saved_color, lesson_description = lesson_description, valid=True)
 
 
 # Load questions from JSON file
